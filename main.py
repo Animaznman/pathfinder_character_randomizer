@@ -11,5 +11,6 @@ def main():
     print("Carol's background is "+carol.background)
     print("Carol's class is "+carol.job)
     
+
 if __name__ == "__main__":
     main()
