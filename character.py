@@ -79,6 +79,7 @@ class Character:
     def set_alignment(self, alignment: tuple):
         self._alignment = alignments[alignment[0]][alignment[1]]
     alignment = property(get_alignment, set_alignment)
+    
     '''
     Section for actual methods to run on class
     '''
@@ -96,5 +97,22 @@ class Character:
         random_num = rand.gauss(1,.2)
         if random_num < .2 or random_num >1.8:
             self._gender = "non-binary"
-        elif :
-            self._gender = 
+        elif random_num >= .2 and random_num < 1:
+            self._gender = "male"
+        elif random_num >= 1 and random_num <=1.8:
+            self._gender = "female"
+    
+    def randomize_age(self):
+        self._age = rand.gauss(40, 5)
+
+    def randomize_weight(self):
+        self._weight = rand.gauss(180, 20)
+    
+    def randomize_height(self):
+        self._height = rand.gauss(175, 20)
+
+    def randomize_alignment(self):
+        rand_1 = rand.randint(0,2)
+        rand_2 = rand.randint(0,2)
+        self._alignment = alignments[rand_1][rand_2]
+    
