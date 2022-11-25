@@ -16,8 +16,9 @@ def main():
     header = {"Authorization": api_key}
     r = requests.get('https://api.pathfinder2.fr/v1/pf2', headers = header)
     print(r.status_code)
+
     # Handling actual html output
-    html_output(character)    
+    html_output(character)
 
 
 def html_output(character):
@@ -33,20 +34,28 @@ def html_output(character):
     #     slider('Character Height (in centimeters)', name = 'Height', value = 175, min_value = 10, max_value = 400),
     #     slider('Character Weight (in pounds)', name = 'Weight', value = 180, min_value = 1, max_value = 600)
     # ])
+
+    def button_clicked():
+        # put_text('button pushed')
+        with use_scope('scope1', clear = True):
+            new_char = char.Character('Placeholder')
+            new_char.generate_character()
+            put_table([
+                ['Character Name', new_char.name],
+                ['Ancestry', new_char.ancestry],
+                ['Background', new_char.background],
+                ['Class', new_char.job],
+                ['Gender', new_char.gender],
+                ['Age', new_char.age],
+                ['Height (cm)', new_char.height],
+                ['Weight (lbs)', new_char.weight],
+                ['Alignment', new_char.alignment],
+                ['Colors'], new_char.colors]
+            )
+
+    put_button('Generate Character', onclick = button_clicked)
+
     
-    put_button('Generate Character', onclick = generate_character())
-    put_table([
-        ['Character Name', character.name],
-        ['Ancestry', character.ancestry],
-        ['Background', character.background],
-        ['Class', character.job],
-        ['Gender', character.gender],
-        ['Age', character.age],
-        ['Height (cm)', character.height],
-        ['Weight (lbs)', character.weight],
-        ['Alignment', character.alignment],
-        ['Colors'], character.colors]
-    )
 
 
 
