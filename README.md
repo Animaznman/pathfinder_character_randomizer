@@ -19,11 +19,11 @@ Current task(2022-12-01):
     a. Develop file to store all possible hooks
     b. Develop way for code to fill in character with a randomized hook
 
-~~Current task(2022-11-25):~~
+~~Previous task(2022-11-25):~~
 1. Fix pywebio stuff for handling randomization web interface.
 2. Fix requests stuff for handling updating of values referenced (this is on the backburner)
 
-~~Previous task (2022-11-16):~~
+~~Past task (2022-11-16):~~
 * Create backend to handle randomization of character
   1. Randomize Character Ancestry, Background, and class
   2. Randomize Character Info: Gender, Age, Height, Weight, Alignment, given
