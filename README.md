@@ -14,7 +14,12 @@ distributions that make sense rather than pure chance. Also seems like the stats
 for the generator don't always follow the rules (Not following Ancestry,
 background, and class ability modifiers).
 
-Current task(2022-25-16):
+Current task(2022-12-01):
+  1. Flavor the character: Come up with character hooks and settings
+    a. Develop file to store all possible hooks
+    b. Develop way for code to fill in character with a randomized hook
+
+~~Current task(2022-11-25):~~
 1. Fix pywebio stuff for handling randomization web interface.
 2. Fix requests stuff for handling updating of values referenced (this is on the backburner)
 
