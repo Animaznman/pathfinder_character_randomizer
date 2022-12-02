@@ -25,10 +25,12 @@ class Character:
         _alignment,
         _colors # Tuples of hex code to represent colors for character (tuple of strings)
     ) = (None, ) * 9
-    colors_data = [] # I might get lazy and not update this each time _colors is updated hurrhurr
+    colors_data = ['#FFFFFF', '#FFFFFF', '#FFFFFF'] # I might get lazy and not update this each time _colors is updated hurrhurr
 
-    def __init__(self, name=''):
+
+    def __init__(self, name='', data = {}):
         self.name = name
+        self.data = data
 
     def get_ancestry(self):
         return self._ancestry
@@ -77,7 +79,7 @@ class Character:
     def set_alignment(self, alignment: tuple):
         self._alignment = alignments[alignment[0]][alignment[1]]
     alignment = property(get_alignment, set_alignment)
-    
+
     def get_colors(self):
         return self._colors
     def set_colors(self, colors: tuple):
@@ -93,10 +95,10 @@ class Character:
 
     def randomize_background(self):
         self._background = backgrounds[rand.randint(0, backgrounds.size-1)]
-    
+
     def randomize_class(self):
         self._job = classes[rand.randint(0, classes.size-1)]
-    
+
     def randomize_gender(self):
         random_num = rand.gauss(1,.2)
         if random_num < .2 or random_num >1.8:
@@ -105,13 +107,13 @@ class Character:
             self._gender = "Male"
         elif random_num >= 1 and random_num <=1.8:
             self._gender = "Female"
-    
+
     def randomize_age(self):
         self._age = round(rand.gauss(40, 10))
 
     def randomize_weight(self):
         self._weight = round(rand.gauss(180, 20))
-    
+
     def randomize_height(self):
         self._height = round(rand.gauss(175, 20))
 
@@ -119,23 +121,50 @@ class Character:
         rand_1 = rand.randint(0,2)
         rand_2 = rand.randint(0,2)
         self._alignment = alignments[rand_1][rand_2]
-    
+
     def randomize_colors(self):
         r = lambda: rand.randint(0,255)
         color1 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r()) # I copied this from stack overflow :D hashtagallshame
-        color2 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r())
-        color3 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r())
+        color2 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r()) # To be honest, I'm still kinda fuzzy on how this works
+        color3 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r()) # Lambda functions be wild, yo.
 
         self.colors_data = (color1, color2, color3)
 
     # Generate a character by taking in possible inputs
-    def generate_character(self):
-        self.randomize_ancestry()
-        self.randomize_background()
-        self.randomize_class()
-        self.randomize_gender()
-        self.randomize_alignment()
-        self.randomize_age()
-        self.randomize_height()
-        self.randomize_weight()
-        self.randomize_colors()
+    def generate_character(self, data = {}):
+        if data['Ancestry'] is not None:
+            self.set_ancestry(data['Ancestry'])
+        else:
+            self.randomize_ancestry()
+        if data['Background'] is not None:
+            self.set_background(data['Background'])
+        else:
+            self.randomize_background()
+        if data['Class'] is not None:
+            self.set_class(data['Class'])
+        else:
+            self.randomize_class()
+        if data['Gender'] is not None:
+            self.set_gender(data['Gender'])
+        else:
+            self.randomize_gender()
+        if data['Alignment'] is not None:
+            self.set_alignment(data['Alignment'])
+        else:
+            self.randomize_alignment()
+        if data['Age'] is not None:
+            self.set_age(data['Age'])
+        else:
+            self.randomize_age()
+        if data['Height'] is not None:
+            self.set_height(data['Height'])
+        else:
+            self.randomize_height()
+        if data['weight'] is not None:
+            self.set_weight(data['weight'])
+        else:
+            self.randomize_weight()
+        if data['color_1'] is not None and data['color_2'] is not None and data['color_3'] is not None:
+            self.set_colors(data['color_1'], data['color_2'], data['color_3'])
+        else:
+            self.randomize_colors()
