@@ -23,26 +23,23 @@ class Character:
         _height,
         _weight,
         _alignment,
-        _colors # Tuple of tuples to represent rgb colors for the character
+        _colors # Tuples of hex code to represent colors for character (tuple of strings)
     ) = (None, ) * 9
+    colors_data = [] # I might get lazy and not update this each time _colors is updated hurrhurr
 
     def __init__(self, name=''):
         self.name = name
-    
+
     def get_ancestry(self):
         return self._ancestry
-    
     def set_ancestry(self, index: int):
         self._ancestry = ancestries[index]
-
     ancestry = property(get_ancestry, set_ancestry)
 
     def get_background(self):
         return self._background
-
     def set_background(self, index: int):
         self._background = backgrounds[index]
-
     background = property(get_background, set_background)
 
     def get_class(self):
@@ -124,21 +121,12 @@ class Character:
         self._alignment = alignments[rand_1][rand_2]
     
     def randomize_colors(self):
-        rand_1 = rand.randint(0,255)
-        rand_2 = rand.randint(0,255)
-        rand_3 = rand.randint(0,255)
-        rand_4 = rand.randint(0,255)
-        rand_5 = rand.randint(0,255)
-        rand_6 = rand.randint(0,255)
-        rand_7 = rand.randint(0,255)
-        rand_8 = rand.randint(0,255)
-        rand_9 = rand.randint(0,255)
-        
-        tuple_1 = (rand_1, rand_2, rand_3)
-        tuple_2 = (rand_4, rand_5, rand_6)
-        tuple_3 = (rand_7, rand_8, rand_9)
+        r = lambda: rand.randint(0,255)
+        color1 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r()) # I copied this from stack overflow :D hashtagallshame
+        color2 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r())
+        color3 = '#{:02x}{:02x}{:02x}'.format(r(), r(), r())
 
-        self._colors = (tuple_1, tuple_2, tuple_3)
+        self.colors_data = (color1, color2, color3)
 
     # Generate a character by taking in possible inputs
     def generate_character(self):
