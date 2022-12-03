@@ -26,7 +26,7 @@ def html_output(character):
             actions(buttons = [
                 {'label': 'Generate character', 'value': 'generate_character'},
                 {'label': 'Generate character with priors', 'value': 'generate_character_with_priors', 'color': 'secondary'},
-                {'label': 'Clear Form', 'type': 'reset', 'color': 'warning'},
+                {'label': 'Clear Form', 'value' : 'reset', 'type': 'reset', 'color': 'warning'},
                 {'label': 'Cancel', 'type': 'cancel', 'color': 'danger'},
                 ],
             name = 'top_options'
@@ -53,22 +53,27 @@ def html_output(character):
         character.generate_character()
         html_output(character)
     elif data['top_options'] == 'generate_character_with_priors':
-        
+        character.generate_character(data)
+        html_output(character)
+    elif data['top_options'] == 'reset':
+        character = char.Character()
+        html_output(character) # This seems pretty hacky.
     # elif data['top_options'] ==
-    # def button_clicked():
-    #     # put_text('button pushed')
-    #     with use_scope('scope1', clear = True):
-    #         new_char = char.Character('Placeholder')
-    #         new_char.generate_character()
-    #
-    #
-    #         put_table([
-    #             ['Character Name', new_char.name],
-    #             ['Ancestry', new_char.ancestry,'Background', new_char.background,'Class', new_char.job],
-    #             ['Gender', new_char.gender,'Age', new_char.age,'Alignment', new_char.alignment],
-    #             ['Height (cm)', new_char.height, 'Weight (lbs)', new_char.weight],
-    #             ['Colors', style(put_text(rgb_0),'background-color: rgb'+rgb_0), style(put_text(rgb_1),'background-color: rgb'+rgb_1), style(put_text(rgb_2),'background-color: rgb'+rgb_2)]
-    #         ])
+    
+    def button_clicked():
+        # put_text('button pushed')
+        with use_scope('scope1', clear = True):
+            new_char = char.Character('Placeholder')
+            new_char.generate_character()
+
+
+            put_table([
+                ['Character Name', new_char.name],
+                ['Ancestry', new_char.ancestry,'Background', new_char.background,'Class', new_char.job],
+                ['Gender', new_char.gender,'Age', new_char.age,'Alignment', new_char.alignment],
+                ['Height (cm)', new_char.height, 'Weight (lbs)', new_char.weight],
+                ['Colors', style(put_text(rgb_0),'background-color: rgb'+rgb_0), style(put_text(rgb_1),'background-color: rgb'+rgb_1), style(put_text(rgb_2),'background-color: rgb'+rgb_2)]
+            ])
 
     # put_button('Generate Character', onclick = button_clicked)
 

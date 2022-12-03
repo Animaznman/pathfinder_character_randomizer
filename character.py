@@ -34,26 +34,26 @@ class Character:
 
     def get_ancestry(self):
         return self._ancestry
-    def set_ancestry(self, index: int):
-        self._ancestry = ancestries[index]
+    def set_ancestry(self, ancestry):
+        self._ancestry = ancestry
     ancestry = property(get_ancestry, set_ancestry)
 
     def get_background(self):
         return self._background
-    def set_background(self, index: int):
-        self._background = backgrounds[index]
+    def set_background(self, background):
+        self._background = background
     background = property(get_background, set_background)
 
     def get_class(self):
         return self._job
-    def set_class(self, index: int):
-        self._job = classes[index]
+    def set_class(self, input):
+        self._job = input
     job = property(get_class, set_class)
 
     def get_gender(self):
         return self._gender
-    def set_gender(self, index: int):
-        self._gender = genders[index]
+    def set_gender(self, gender):
+        self._gender = gender
     gender = property(get_gender, set_gender)
 
     def get_age(self):
@@ -76,8 +76,8 @@ class Character:
 
     def get_alignment(self):
         return self._alignment
-    def set_alignment(self, alignment: tuple):
-        self._alignment = alignments[alignment[0]][alignment[1]]
+    def set_alignment(self, alignment):
+        self._alignment = alignment
     alignment = property(get_alignment, set_alignment)
 
     def get_colors(self):
@@ -132,39 +132,39 @@ class Character:
 
     # Generate a character by taking in possible inputs
     def generate_character(self, data = {}):
-        if data['Ancestry'] is not None:
+        if 'Ancestry' in data:
             self.set_ancestry(data['Ancestry'])
         else:
             self.randomize_ancestry()
-        if data['Background'] is not None:
+        if 'Background' in data:
             self.set_background(data['Background'])
         else:
             self.randomize_background()
-        if data['Class'] is not None:
+        if 'Class' in data:
             self.set_class(data['Class'])
         else:
             self.randomize_class()
-        if data['Gender'] is not None:
+        if 'Gender' in data:
             self.set_gender(data['Gender'])
         else:
             self.randomize_gender()
-        if data['Alignment'] is not None:
+        if 'Alignment' in data:
             self.set_alignment(data['Alignment'])
         else:
             self.randomize_alignment()
-        if data['Age'] is not None:
+        if 'Age' in data:
             self.set_age(data['Age'])
         else:
             self.randomize_age()
-        if data['Height'] is not None:
+        if 'Height' in data:
             self.set_height(data['Height'])
         else:
             self.randomize_height()
-        if data['weight'] is not None:
+        if 'weight' in data:
             self.set_weight(data['weight'])
         else:
             self.randomize_weight()
-        if data['color_1'] is not None and data['color_2'] is not None and data['color_3'] is not None:
-            self.set_colors(data['color_1'], data['color_2'], data['color_3'])
+        if 'color_1' in data and 'color_2' in data and 'color_3' in data:
+            self.set_colors((data['color_1'], data['color_2'], data['color_3']))
         else:
             self.randomize_colors()
