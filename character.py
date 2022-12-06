@@ -168,3 +168,6 @@ class Character:
             self.set_colors((data['color_1'], data['color_2'], data['color_3']))
         else:
             self.randomize_colors()
+
+    # Clear all attributes of the character object
+    def clear(self): # Look up how to list through attributes of object
