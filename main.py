@@ -2,6 +2,7 @@ import character as char
 import requests
 from pywebio.output import *
 from pywebio.input import *
+from pywebio.pin import *
 import pandas as pd
 
 
@@ -48,34 +49,49 @@ def html_output(character):
                 ], name = 'print'
             )
         ])
-    # put_text('You clicked the `%s` button' % data['top_options'])
-    if data['top_options'] == 'generate_character':
-        character.generate_character()
-        html_output(character)
-    elif data['top_options'] == 'generate_character_with_priors':
-        character.generate_character(data)
-        html_output(character)
-    elif data['top_options'] == 'reset':
-        character = char.Character()
-        html_output(character) # This seems pretty hacky.
+
     # elif data['top_options'] ==
-    
-    def button_clicked():
-        # put_text('button pushed')
-        with use_scope('scope1', clear = True):
-            new_char = char.Character('Placeholder')
-            new_char.generate_character()
 
+# def html_output(character):
+#     with use_scope('scope1', clear = True):
+#         put_text('Pathfinder 2e Character Generator')
+#         options = put_actions(buttons = [
+#                 {'label': 'Generate character', 'value': 'generate_character'},
+#                 {'label': 'Generate character with priors', 'value': 'generate_character_with_priors', 'color': 'secondary'},
+#                 {'label': 'Clear Form', 'value' : 'reset', 'color': 'warning'},
+#                 {'label': 'Cancel', 'value' : 'cancel', 'color': 'danger'},
+#                 ],
+#             name = 'options'
+#         )
+#         put_table([[put_text("Character Information")],
+#             [
+#                 put_input(label = 'Name', name = 'Name', type = TEXT, value = character.name), 
+#                 put_input(label = 'Age', name = 'Age', type = NUMBER, value = character.age),
+#                 put_radio(label = 'Gender', name = 'Gender', options = char.genders, value = character.gender)
+#             ], 
+#             [
+#                 put_select(label = 'Ancestry', name = 'Ancestry', options = char.ancestries, value = character.ancestry),
+#                 put_select(label = 'Background', name = 'Background', options = char.backgrounds, value = character.background),
+#                 put_select(label = 'Class', name = 'Class', options = char.classes, value = character.job),
+#             ],
+#             [
+#                 put_select(label = 'Alignment', name = 'Alignment', options = char.flattened_alignments, value = character.alignment),
+#                 put_slider(label = 'Height (in centimeters)', name = 'Height', min_value = 10, max_value = 400, value = character.height),
+#                 put_slider(label = 'Weight (in pounds)', name = 'Weight', min_value = 1, max_value = 600, value = character.weight),
+#             ],
+#             [
+#                 put_input(label = 'Primary Color', name = 'color_1', type = 'color', value = character.colors_data[0]),
+#                 put_input(label = 'Secondary Color', name = 'color_2', type = 'color', value = character.colors_data[1]),
+#                 put_input(label = 'Tertiary Color', name = 'color_3', type = 'color', value = character.colors_data[2]),
+#             ]
+#         ])
+#         character.generate_character()
+#         pin_update('Age')
+#         print(type(options))
+        # put_text('You clicked the `%s` button' % options.value)
 
-            put_table([
-                ['Character Name', new_char.name],
-                ['Ancestry', new_char.ancestry,'Background', new_char.background,'Class', new_char.job],
-                ['Gender', new_char.gender,'Age', new_char.age,'Alignment', new_char.alignment],
-                ['Height (cm)', new_char.height, 'Weight (lbs)', new_char.weight],
-                ['Colors', style(put_text(rgb_0),'background-color: rgb'+rgb_0), style(put_text(rgb_1),'background-color: rgb'+rgb_1), style(put_text(rgb_2),'background-color: rgb'+rgb_2)]
-            ])
-
-    # put_button('Generate Character', onclick = button_clicked)
+def on_click():
+    character.generate_character()
 
 def update_character_options():
 
