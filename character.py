@@ -4,14 +4,14 @@ import numpy as np
 import random as rand
 
 character_options = pd.read_csv('character_options.csv')
-ancestries = character_options['Ancestries'].dropna().to_numpy()
-backgrounds = character_options['Backgrounds'].to_numpy()
-classes = character_options['Classes'].dropna().to_numpy()
+ancestries = np.insert(character_options['Ancestries'].dropna().to_numpy(), 0, None)
+backgrounds = np.insert(character_options['Backgrounds'].dropna().to_numpy(), 0, None)
+classes = np.insert(character_options['Classes'].dropna().to_numpy(), 0, None)
 genders = ['Male', 'Female', 'Non-binary']
 alignments = [["Lawful Good", "Neutral Good", "Chaotic Good"],
     ["Lawful Neutral", "True Neutral", "Chaotic Neutral"],
     ["Lawful Evil", "Neutral Evil", "Chaotic Neutral"]]
-flattened_alignments = np.array(alignments).flatten()
+flattened_alignments = np.insert(np.array(alignments).flatten(), 0, None)
 
 class Character:
     (
@@ -91,13 +91,13 @@ class Character:
     '''
 
     def randomize_ancestry(self):
-        self._ancestry = ancestries[rand.randint(0, ancestries.size-1)]
+        self._ancestry = ancestries[rand.randint(1, ancestries.size-1)]
 
     def randomize_background(self):
-        self._background = backgrounds[rand.randint(0, backgrounds.size-1)]
+        self._background = backgrounds[rand.randint(1, backgrounds.size-1)]
 
     def randomize_class(self):
-        self._job = classes[rand.randint(0, classes.size-1)]
+        self._job = classes[rand.randint(1, classes.size-1)]
 
     def randomize_gender(self):
         random_num = rand.gauss(1,.2)

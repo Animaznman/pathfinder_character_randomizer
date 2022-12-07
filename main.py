@@ -6,8 +6,6 @@ from pywebio.pin import *
 from pywebio.platform import config
 import pandas as pd
 
-priors = {}
-
 @config(theme="dark")
 def main():
 
@@ -20,7 +18,6 @@ def main():
     # update_character_options()
 
     # Handling actual html output
-    sentinel = True # Allows for while loop inside html_out
     html_output(character)
 
 
@@ -61,7 +58,11 @@ def main():
 
 
 def html_output(character):
+    sentinel = True # Allows for loop to keep running (ideally)
+    optimize = False # Determine if Key abilities optimized
+    priors = {}
     character = character
+
     def gen_char():
         character.generate_character()
         pin_update('Age', value = character.age)
@@ -75,18 +76,31 @@ def html_output(character):
         pin_update('color_1', value = character.colors_data[0])
         pin_update('color_2', value = character.colors_data[1])
         pin_update('color_3', value = character.colors_data[2])
+        priors.clear()
 
     def gen_char_pri():
         # Run generate_character_with_priors function that is yet to be designed
         character.generate_character(data = priors)
-        return None
-        
+        pin_update('Age', value = character.age)
+        pin_update('Gender', value = character.gender)
+        pin_update('Ancestry', value = character.ancestry)
+        pin_update('Background', value = character.background)
+        pin_update('Class', value = character.job)
+        pin_update('Alignment', value = character.alignment)
+        pin_update('Height', value = character.height)
+        pin_update('Weight', value = character.weight)
+        pin_update('color_1', value = character.colors_data[0])
+        pin_update('color_2', value = character.colors_data[1])
+        pin_update('color_3', value = character.colors_data[2])
+
+
     def clear_form():
+        priors.clear()
         pin_update('Age', value = 0)
         pin_update('Gender', value = 'Non-binary')
-        pin_update('Ancestry', value = 'Anadi')
-        pin_update('Background', value = 'Abadar\'s Avenger')
-        pin_update('Class', value = 'Alchemist')
+        pin_update('Ancestry', value = 'None')
+        pin_update('Background', value = 'None')
+        pin_update('Class', value = 'None')
         pin_update('Alignment', value = 'Lawful Good')
         pin_update('Height', value = 180)
         pin_update('Weight', value = 180)
@@ -105,6 +119,7 @@ def html_output(character):
             dict(label = 'Cancel', value = character, color = 'danger')
         ],
         onclick = [gen_char, gen_char_pri, clear_form, cancel])
+        put_checkbox(label = '', name = 'optimize', options = ['Optimize for Class Key Ability'])
     with use_scope('scope1', clear = True):
         put_text('Pathfinder 2e Character Generator')
         # options = put_actions(buttons = [
@@ -138,7 +153,13 @@ def html_output(character):
             ]
         ])
     while sentinel == True:
-        pass
+        change = pin_wait_change('Name', 'Age', 'Gender', 'Ancestry', 'Background', 'Class',
+            'Alignment', 'Height', 'Weight', 'color_1', 'color_2', 'color_3')
+        optimize = pin_wait_change('optimize')['value'] == ['Optimize for Class Key Ability']
+        priors.update({change['name']:change['value']})
+        with use_scope('scope2', clear = True):
+            put_code(priors)
+
 def update_character_options():
 
     api_key = 'da468b89-2bf8-4e2b-a939-79c6e6ef25ce'
