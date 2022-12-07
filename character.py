@@ -8,7 +8,7 @@ ancestries = character_options['Ancestries'].dropna().to_numpy()
 backgrounds = character_options['Backgrounds'].to_numpy()
 classes = character_options['Classes'].dropna().to_numpy()
 genders = ['Male', 'Female', 'Non-binary']
-alignments = [["Lawful Good", "Neutral Good", "Choatic Good"],
+alignments = [["Lawful Good", "Neutral Good", "Chaotic Good"],
     ["Lawful Neutral", "True Neutral", "Chaotic Neutral"],
     ["Lawful Evil", "Neutral Evil", "Chaotic Neutral"]]
 flattened_alignments = np.array(alignments).flatten()
@@ -168,6 +168,3 @@ class Character:
             self.set_colors((data['color_1'], data['color_2'], data['color_3']))
         else:
             self.randomize_colors()
-
-    # Clear all attributes of the character object
-    def clear(self): # Look up how to list through attributes of object

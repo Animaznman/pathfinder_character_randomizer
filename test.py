@@ -2,35 +2,20 @@ from pywebio.output import *
 from pywebio.input import *
 from pywebio.pin import *
 
-commands = []
+def func_1():
+    put_text("func_1 reached")
+def func_2():
+    put_text("func_2 reached")
+def func_3():
+    put_text("func_3 reached")
+def func_4():
+    put_text("func_4 reached")
 
-def run_this():
-    with use_scope('this_scope', clear = True):
-        put_text("This ran???")
-        pin_update('updater', value = 'Non-default value')
-        # commands.append(changed)
-        commands.append(pin_wait_change('updater', 'Ancestry'))
-        put_code(commands)
-
-
-def run_that():
-    with use_scope('this_scope', clear = True):
-        put_text("This other thing ran")
-        pin_update('updater', value = 'Other non-default value')
-        # commands.append(changed)
-        commands.append(pin_wait_change('updater', 'Ancestry'))
-        put_code(commands)
-
-
-# put_buttons([dict(label = 'Press A', value = 'a', color = 'primary'),
-# dict(label = 'Press B', value = 'b', color = 'secondary')],
-# onclick = [run_that, run_this])
-
-
-# onclick = run_this)
-put_select(label = 'Ancestry', name = 'Ancestry', options = ['Blarg', 'Blurg', 'Blorg'])
-put_input(label = 'Update Me', name = 'updater', value = 'Default Value')
-while True:
-    commands.append(pin_wait_change('updater','Ancestry'))
-    with use_scope('this_scope', clear = True):
-            put_code(commands)
+with use_scope('button_scope', clear = True):
+        put_buttons([
+            dict(label = 'Func 1', value = None, color = 'primary'),
+            dict(label = 'Func 2', value = None, color = 'secondary'),
+            dict(label = 'Func 3', value = None, color = 'warning'),
+            dict(label = 'Func 4', value = None, color = 'danger')
+        ],
+        onclick = [func_1, func_2, func_3, func_4])

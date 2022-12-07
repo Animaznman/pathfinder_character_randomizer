@@ -20,6 +20,7 @@ def main():
     # update_character_options()
 
     # Handling actual html output
+    sentinel = True # Allows for while loop inside html_out
     html_output(character)
 
 
@@ -57,26 +58,44 @@ def main():
 
     # elif data['top_options'] ==
 
-def gen_char(character):
-    character.generate_character()
-    pin_update('Age', value = character.age)
-    pin_update('Gender', value = character.gender)
-    pin_update('Ancestry', value = character.ancestry)
-    pin_update('Background', value = character.background)
-    pin_update('Class', value = character.job)
-    pin_update('Alignment', value = character.alignment)
-    pin_update('Height', value = character.height)
-    pin_update('Weight', value = character.weight)
-    pin_update('color_1', value = character.colors_data[0])
-    pin_update('color_2', value = character.colors_data[1])
-    pin_update('color_3', value = character.colors_data[2])
 
-def gen_char_pri(character):
-    # Run generate_character_with_priors function that is yet to be designed
-
-def clear_form()
 
 def html_output(character):
+    character = character
+    def gen_char():
+        character.generate_character()
+        pin_update('Age', value = character.age)
+        pin_update('Gender', value = character.gender)
+        pin_update('Ancestry', value = character.ancestry)
+        pin_update('Background', value = character.background)
+        pin_update('Class', value = character.job)
+        pin_update('Alignment', value = character.alignment)
+        pin_update('Height', value = character.height)
+        pin_update('Weight', value = character.weight)
+        pin_update('color_1', value = character.colors_data[0])
+        pin_update('color_2', value = character.colors_data[1])
+        pin_update('color_3', value = character.colors_data[2])
+
+    def gen_char_pri():
+        # Run generate_character_with_priors function that is yet to be designed
+        character.generate_character(data = priors)
+        return None
+        
+    def clear_form():
+        pin_update('Age', value = 0)
+        pin_update('Gender', value = 'Non-binary')
+        pin_update('Ancestry', value = 'Anadi')
+        pin_update('Background', value = 'Abadar\'s Avenger')
+        pin_update('Class', value = 'Alchemist')
+        pin_update('Alignment', value = 'Lawful Good')
+        pin_update('Height', value = 180)
+        pin_update('Weight', value = 180)
+        pin_update('color_1', value = '#FFFFFF')
+        pin_update('color_2', value = '#FFFFFF')
+        pin_update('color_3', value = '#FFFFFF')
+
+    def cancel():
+        sentinel = False
 
     with use_scope('button_scope', clear = True):
         put_buttons([
@@ -85,7 +104,7 @@ def html_output(character):
             dict(label = 'Clear Form', value = character, color = 'warning'),
             dict(label = 'Cancel', value = character, color = 'danger')
         ],
-        onclick = gen_char)
+        onclick = [gen_char, gen_char_pri, clear_form, cancel])
     with use_scope('scope1', clear = True):
         put_text('Pathfinder 2e Character Generator')
         # options = put_actions(buttons = [
@@ -118,7 +137,8 @@ def html_output(character):
                 put_input(label = 'Tertiary Color', name = 'color_3', type = 'color', value = character.colors_data[2]),
             ]
         ])
-
+    while sentinel == True:
+        pass
 def update_character_options():
 
     api_key = 'da468b89-2bf8-4e2b-a939-79c6e6ef25ce'
